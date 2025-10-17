@@ -25,6 +25,9 @@ Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und S
 - Hard Drop: Leertaste
 - Pause: P
 
+## Technologie-Stack
+- React 18, TypeScript 5, Vite 5
+
 ## Repo-Struktur
 ```
 .
