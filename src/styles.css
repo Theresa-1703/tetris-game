@@ -1,0 +1,183 @@
+/* Modern, clean look with subtle gradients and smooth animations */
+:root {
+  --bg: #0b1020;
+  --panel: rgba(255,255,255,0.06);
+  --panel-border: rgba(255,255,255,0.12);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #0ea5e9;
+  --danger: #ef4444;
+  --success: #22c55e;
+
+  /* Tetromino colors */
+  --c-I: #06b6d4;
+  --c-J: #3b82f6;
+  --c-L: #f59e0b;
+  --c-O: #eab308;
+  --c-S: #22c55e;
+  --c-T: #a855f7;
+  --c-Z: #ef4444;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+html { overflow: hidden; } /* keine globale Scrollbar */
+body {
+  margin: 0;
+  overflow: hidden; /* Seite nicht scrollbar */
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 20% 20%, #111827 0%, var(--bg) 50%, #05070e 100%);
+}
+
+.app {
+  height: 100vh; /* sichere volle Höhe der Viewport-Höhe */
+  overflow: hidden; /* verhindert internes Scrollen */
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 340px);
+  gap: 24px;
+  padding: 24px;
+}
+
+.game-wrap {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.board-wrap {
+  grid-column: 2;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+.board {
+  display: grid;
+  gap: 2px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--panel-border);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.row { display: contents; }
+
+.cell {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 120ms ease, box-shadow 160ms ease;
+}
+
+.cell.filled::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,255,255,0.35), rgba(255,255,255,0.1));
+  mix-blend-mode: overlay;
+}
+
+.cell.filled {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2), 0 6px 10px rgba(0,0,0,0.25);
+}
+
+.cell.ghost {
+  background: rgba(255,255,255,0.04);
+  outline: 1px dashed rgba(255,255,255,0.15);
+}
+
+/* Piece color classes */
+.cell.I { background: color-mix(in srgb, var(--c-I) 72%, #0000); }
+.cell.J { background: color-mix(in srgb, var(--c-J) 72%, #0000); }
+.cell.L { background: color-mix(in srgb, var(--c-L) 72%, #0000); }
+.cell.O { background: color-mix(in srgb, var(--c-O) 72%, #0000); }
+.cell.S { background: color-mix(in srgb, var(--c-S) 72%, #0000); }
+.cell.T { background: color-mix(in srgb, var(--c-T) 72%, #0000); }
+.cell.Z { background: color-mix(in srgb, var(--c-Z) 72%, #0000); }
+
+.sidebar {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  max-height: calc(100vh - 48px); /* app padding (24px * 2) berücksichtigen */
+  overflow: auto; /* internes Scrollen, falls sehr kleine Viewports */
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--panel-border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 80ms ease, background 160ms ease, border-color 160ms ease;
+}
+button:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.25); }
+button:active { transform: translateY(0); }
+
+.preview {
+  display: grid;
+  grid-template-columns: repeat(4, 20px);
+  gap: 2px;
+  padding: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+}
+
+.footer {
+  margin-top: auto;
+  color: var(--muted);
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+@media (max-width: 960px) {
+  .app { grid-template-columns: 1fr; }
+  .game-wrap { grid-column: 1; }
+}

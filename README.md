@@ -1,4 +1,4 @@
-# Tetris Modern (React + TypeScript + Vite)
+# Tetris (React + TypeScript + Vite)
 
 Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und State-Management.
 
