@@ -1,3 +1,9 @@
+> Hinweis:
+> Dieses Projekt wurde als Experiment mittels „Vibecoding“ mit GitHub Copilot umgesetzt, um die Zusammenarbeit mit KI über den gesamten Entwicklungsablauf zu evaluieren.
+> Ziel war es, Architektur- und Technologieentscheidungen, Produktivität und Codequalität in einem realistischen Monorepo-Setup zu prüfen.
+
+---
+
 # Tetris (React + TypeScript + Vite)
 
 Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und State-Management.
@@ -12,45 +18,57 @@ Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und S
 - Moderne Optik (klare Farben, weiche Schatten/Animationen, responsive Sidebar)
 - Einfache WebAudio-Soundeffekte (bewegung/rotation/drop/line)
 
-## Steuerung
+## Steuerung im Spiel
 - Links/Rechts: Pfeiltasten oder A/D
 - Rotieren: Pfeil hoch / W / X (im Uhrzeigersinn), Z oder Strg (gegen Uhrzeigersinn)
 - Soft Drop: Pfeil runter oder S
 - Hard Drop: Leertaste
 - Pause: P
 
-## Projektstruktur (Auszug)
-- `src/game/` – reine Spiel-Engine (Board-Operationen, Kollisionsprüfung, SRS, Spawn, Clear, Scoring)
-- `src/App.tsx` – UI/State-Integration, Keyboard-Handling, Rendering (Board, Ghost, Next-Preview)
-- `src/styles.css` – moderne Styles
-- `vite.config.ts` – Vite + React Plugin
+## Repo-Struktur
+```
+.
+├─ index.html
+├─ package.json
+├─ tsconfig.json
+├─ vite.config.ts
+└─ src/
+   ├─ App.tsx           # UI/State-Integration, Rendering (Board, Ghost, Next-Preview)
+   ├─ main.tsx          # App-Einstiegspunkt
+   ├─ styles.css        # moderne Styles
+   └─ game/             # reine Spiel-Engine
+      ├─ board.ts       # Board-Operationen, Kollisionsprüfung
+      ├─ constants.ts   # Konstanten (Größen, Punkte, SRS-Daten)
+      ├─ engine.ts      # Tetris-Loop, Ticks, Input-Handling, Scoring
+      ├─ rng.ts         # 7-Bag RNG
+      ├─ sound.ts       # einfache WebAudio-Sounds
+      ├─ tetromino.ts   # Tetromino-Shapes/Rotationen (SRS inkl. I-Kicks)
+      └─ types.ts       # Typen
+```
 
 ## Voraussetzung
 - Node.js >= 18
 
-## Loslegen (Windows / cmd.exe)
+## Installation
 ```cmd
-cd C:\Users\joana\Desktop\Projekte\tetris-game
 npm install
+```
+
+## Entwicklung starten
+Startet den Vite-Dev-Server.
+```cmd
 npm run dev
 ```
-Die Konsole zeigt die lokale URL (typisch http://localhost:5173/). Mit STRG+C beenden.
+Öffne anschließend: http://localhost:5173
 
-## Produktions-Build + Vorschau
+## Build
+Erzeugt das Produktions-Bundle unter `dist/`.
 ```cmd
-cd C:\Users\joana\Desktop\Projekte\tetris-game
 npm run build
+```
+
+## Vorschau eines Builds
+Servt das `dist/`-Verzeichnis lokal.
+```cmd
 npm run preview
 ```
-`npm run build` erzeugt das `dist/`-Verzeichnis, `npm run preview` servt es lokal.
-
-## Hinweise / Troubleshooting
-- Falls der Dev-Server-Port bereits belegt ist, zeigt Vite einen alternativen Port an.
-- Sound: Wird per WebAudio erzeugt. Über den Button „Stumm/Ton an“ in der Sidebar kann stumm geschaltet werden.
-- Der Code ist in TypeScript geschrieben; die Logik ist komplett unter `src/game/` gekapselt.
-
-## Nächste kleine Ideen
-- Speicherung der Highscores in LocalStorage
-- Touch-Steuerung für Mobilgeräte
-- Hintergrundmusik (deaktivierbar)
-
