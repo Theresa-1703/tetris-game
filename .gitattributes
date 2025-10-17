@@ -1,0 +1,26 @@
+# Normalize line endings to LF in repo; Windows shells get CRLF on checkout
+* text=auto eol=lf
+
+# Script-specific EOLs
+*.sh   text eol=lf
+*.bash text eol=lf
+*.ps1  text eol=crlf
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+
+# Treat common binaries as binary to avoid EOL/diff issues
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.mp3  binary
+*.wav  binary
+*.ogg  binary
+*.mp4  binary
+*.mov  binary
+*.pdf  binary
+
+# Lockfiles are JSON but can be large; ensure text normalization only
+package-lock.json text eol=lf
+
