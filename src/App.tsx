@@ -133,10 +133,6 @@ export default function App() {
         case 'x':
           engine.rotate(1)
           break
-        case 'z':
-        case 'Control':
-          engine.rotate(-1)
-          break
         case 'ArrowDown':
         case 's':
           engine.softDrop(true)
@@ -190,7 +186,8 @@ export default function App() {
           <button onClick={reset}>Neu starten</button>
         </div>
         <div className="footer">
-          Steuerung: ←/→ bewegen, ↑/X drehen, Z/Strg gegen den Uhrzeigersinn, ↓ Soft Drop, Leertaste Hard Drop, P Pause.
+          Steuerung:
+          ←/→ bewegen, ↑/X drehen, ↓ Soft Drop, Leertaste Hard Drop, P Pause.
         </div>
       </aside>
     </div>

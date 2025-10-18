@@ -17,6 +17,9 @@
   --c-S: #22c55e;
   --c-T: #a855f7;
   --c-Z: #ef4444;
+
+  /* Sidebar-Breite für Desktop */
+  --sidebar-w: clamp(280px, 28vw, 340px);
 }
 
 * { box-sizing: border-box; }
@@ -33,20 +36,23 @@ body {
 .app {
   height: 100vh; /* sichere volle Höhe der Viewport-Höhe */
   overflow: hidden; /* verhindert internes Scrollen */
-  display: grid;
-  grid-template-columns: 1fr minmax(280px, 340px);
-  gap: 24px;
+  /* statt Grid ein einfacher Container, damit das Board gegen den Viewport zentriert werden kann */
+  position: relative;
+  display: block;
   padding: 24px;
 }
 
+/* game-wrap füllt den verfügbaren Platz und zentriert den Board-Container horizontal exakt im Viewport */
 .game-wrap {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  /* horizontal zentriert, vertikal oben startend */
+  justify-items: center;
+  align-items: start;
+  height: 100%;
 }
 
 .board-wrap {
-  grid-column: 2;
+  /* bleibt ein normaler Block; kein Grid-Spaltenbezug mehr nötig */
   background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border: 1px solid var(--panel-border);
   border-radius: 12px;
@@ -109,8 +115,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Sidebar rechts fixieren, unabhängig von der Board-Zentrierung */
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  width: var(--sidebar-w);
   height: calc(100vh - 48px);
   overflow: hidden;
+  z-index: 10;
 }
 
 h1 {
@@ -177,6 +189,11 @@ button:active { transform: translateY(0); }
 }
 
 @media (max-width: 960px) {
-  .app { grid-template-columns: 1fr; }
-  .game-wrap { grid-column: 1; }
+  /* Auf kleinen Viewports wieder normales, gestapeltes Layout */
+  .app { padding: 16px; }
+  .sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+  }
 }

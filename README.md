@@ -20,7 +20,7 @@ Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und S
 
 ## Steuerung im Spiel
 - Links/Rechts: Pfeiltasten oder A/D
-- Rotieren: Pfeil hoch / W / X (im Uhrzeigersinn), Z oder Strg (gegen Uhrzeigersinn)
+- Rotieren: Pfeil hoch / W / X (im Uhrzeigersinn)
 - Soft Drop: Pfeil runter oder S
 - Hard Drop: Leertaste
 - Pause: P
