@@ -4,6 +4,11 @@
 
 ---
 
+<img width="1616" height="842" alt="image" src="https://github.com/user-attachments/assets/53846d12-07dd-4b8f-a963-fd854c3f97f5" />
+
+---
+
+
 # Tetris (React + TypeScript + Vite)
 
 Ein modernes, spielbares Tetris mit sauberer Trennung von Logik, Rendering und State-Management.
