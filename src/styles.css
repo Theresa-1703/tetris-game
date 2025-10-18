@@ -109,9 +109,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 0;
-  max-height: calc(100vh - 48px); /* app padding (24px * 2) berücksichtigen */
-  overflow: auto; /* internes Scrollen, falls sehr kleine Viewports */
+  height: calc(100vh - 48px);
+  overflow: hidden;
 }
 
 h1 {

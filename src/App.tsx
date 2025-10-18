@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Engine } from './game/engine'
 import { COLS, PIECE_KEYS, ROWS } from './game/constants'
 import type { Matrix, PieceId } from './game/types'
 import { TETROMINOES } from './game/tetromino'
-import { Sound } from './game/sound'
 
 function useRafLoop(callback: (dtMs: number) => void, running: boolean) {
   const last = useRef<number | null>(null)
@@ -70,11 +69,10 @@ export default function App() {
   const [over, setOver] = useState(false)
   const [next, setNext] = useState<PieceId[]>([])
   const [ghost, setGhost] = useState<boolean[][] | undefined>(undefined)
-  const sound = useMemo(() => new Sound(), [])
 
   useEffect(() => {
     const engine = new Engine((ev) => {
-      if (ev.type === 'lines') { sound.line() }
+      if (ev.type === 'lines') { /* kein Ton */ }
       if (ev.type === 'lock') {}
       if (ev.type === 'spawn') {}
       if (ev.type === 'gameover') {}
@@ -109,7 +107,7 @@ export default function App() {
 
     const int = setInterval(sync, 30)
     return () => { clearInterval(int) }
-  }, [sound])
+  }, [])
 
   useRafLoop((dt) => {
     engineRef.current?.step(dt)
@@ -124,34 +122,34 @@ export default function App() {
       switch (e.key) {
         case 'ArrowLeft':
         case 'a':
-          if (engine.move(-1)) sound.move()
+          engine.move(-1)
           break
         case 'ArrowRight':
         case 'd':
-          if (engine.move(1)) sound.move()
+          engine.move(1)
           break
         case 'ArrowUp':
         case 'w':
         case 'x':
-          if (engine.rotate(1)) sound.rotate()
+          engine.rotate(1)
           break
         case 'z':
         case 'Control':
-          if (engine.rotate(-1)) sound.rotate()
+          engine.rotate(-1)
           break
         case 'ArrowDown':
         case 's':
-          if (engine.softDrop(true)) sound.move()
+          engine.softDrop(true)
           break
         case ' ': // hard drop
           e.preventDefault();
-          const dist = engine.hardDrop(); if (dist>0) sound.drop()
+          engine.hardDrop()
           break
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [sound])
+  }, [])
 
   const togglePause = () => {
     const engine = engineRef.current!
@@ -190,7 +188,6 @@ export default function App() {
         <div className="controls">
           <button onClick={togglePause}>{paused ? 'Fortsetzen' : 'Pause'}</button>
           <button onClick={reset}>Neu starten</button>
-          <button onClick={() => sound.enable(!sound.enabled)}>{sound.enabled ? 'Stumm' : 'Ton an'}</button>
         </div>
         <div className="footer">
           Steuerung: ←/→ bewegen, ↑/X drehen, Z/Strg gegen den Uhrzeigersinn, ↓ Soft Drop, Leertaste Hard Drop, P Pause.
